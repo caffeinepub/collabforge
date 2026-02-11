@@ -1,0 +1,172 @@
+{
+  "kind": "spec_vs_diff_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-11T14:17:40.989Z",
+  "summary": "Diff adds a new Motoko backend actor with profile/project/task/message/rating-related types/state, and a new TanStack Router-based frontend with Internet Identity auth, onboarding gate, profile edit/view UI, quiz local storage, swipe-like matching UI, projects form, and collaboration task/message boards with manual refresh. Several BuildRequest requirements appear only partially implemented or lack evidence in the shown diff (notably backend persistence/authorization for quiz/matching decisions, project applications/invitations, full task-board functionality, account deletion/reporting, and required static assets).",
+  "missing_requirements": [
+    {
+      "id": "REQ-1",
+      "requirement": "After successful sign-in, the backend has a user record keyed by the caller principal; returning users are taken to dashboard and new users to onboarding/profile setup.",
+      "reason": "Frontend AuthGate routes to /onboarding when caller profile is null, but there is no clear evidence of an explicit backend \"user account record\" creation on first sign-in (beyond saving a profile), nor logic shown to route returning users to /dashboard after sign-in.",
+      "evidence": [
+        "frontend/src/components/auth/AuthGate.tsx",
+        "backend/main.mo (truncated)"
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "requirement": "Creative Profile CRUD with all specified fields (genres/styles, goals, mood/vibe tags, inspirations) and backend enforcement that only the owner can edit their profile; users can view other users’ profiles.",
+      "reason": "CreativeProfile type includes the required fields, but the shown profile form state only includes displayName, bio, skillTags, lookingFor, availability, and portfolioLinks; no evidence of UI to edit skill level, genres, goals, mood/vibe tags, or inspirations. Backend authorization/enforcement and \"view other users\" support is not fully verifiable due to backend truncation.",
+      "evidence": [
+        "backend/main.mo (truncated)",
+        "frontend/src/components/profile/CreativeProfileForm.tsx (truncated)",
+        "frontend/src/hooks/useQueries.ts (truncated)"
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "requirement": "Quiz answers are persisted (latest answers) for use in matching, can be re-taken, and are visible/editable from settings/profile; prompt users to complete quiz before match suggestions.",
+      "reason": "Quiz answers are stored only in localStorage via a frontend hook; no evidence of backend persistence. No evidence shown of quiz being editable from Settings/Profile area. Matching hook returns no candidates if quiz incomplete, but prompting behavior/UI is not evidenced here.",
+      "evidence": [
+        "frontend/src/hooks/useQuizAnswers.ts",
+        "frontend/src/hooks/useSmartMatching.ts",
+        "frontend/src/App.tsx"
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "requirement": "Persist likes/passes in backend so candidates are not repeatedly suggested; ranked, explainable suggestions based on quiz/profile overlap; backend prevents liking/passing self.",
+      "reason": "Likes/passes are stored in localStorage only; no evidence of backend persistence or enforcement (including preventing liking/passing self). Matching candidates are derived from project creators (not a general user pool) and use quiz vs project tag overlap, not explicit profile+quiz overlap across users; explainability is limited to sharedTags, but persistence requirements are not met in shown diff.",
+      "evidence": [
+        "frontend/src/hooks/useSmartMatching.ts",
+        "frontend/src/components/matching/SwipeDeck.tsx",
+        "frontend/src/components/matching/MatchCard.tsx",
+        "backend/main.mo (truncated)"
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "requirement": "Project postings: create/edit/archive own projects; all users can browse feed, filter by roles needed and genres/styles (at minimum); archived projects hidden from default feed; project detail page.",
+      "reason": "ProjectForm shown creates projects but uses a fixed category ('other: General') and does not show roles needed, timeline/availability, or external links entry. No evidence shown for edit/archive flows or feed filtering by roles/genres. Backend has ProjectStatus including #completed/#cancelled but no evidence of an archive mechanism or filtering behavior in feed.",
+      "evidence": [
+        "frontend/src/components/projects/ProjectForm.tsx (truncated)",
+        "frontend/src/hooks/useQueries.ts (truncated)",
+        "backend/main.mo (truncated)"
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "requirement": "Project applications and invitations (apply with message+role; owners review accept/reject; owners invite specific users; invited users accept/decline; backend authorization).",
+      "reason": "No evidence in the shown frontend hooks/components or backend snippet of application/invitation data models or methods.",
+      "evidence": [
+        "backend/main.mo (truncated)",
+        "frontend/src/hooks/useQueries.ts (truncated)"
+      ]
+    },
+    {
+      "id": "REQ-7",
+      "requirement": "Collaboration space: task board with To do/Doing/Done columns, move tasks across columns, optional assignment; message board with chronological history; access restricted to project members; UI updates with polling/refresh.",
+      "reason": "MessageBoard and TaskBoard exist with manual refresh; however TaskBoard is only a flat list of text tasks (no columns, moving, assignment). Access control to members is not evidenced in frontend, and backend membership enforcement cannot be verified from truncated code; backend state uses taskBoards as List<Text> (no column state).",
+      "evidence": [
+        "frontend/src/components/collaboration/TaskBoard.tsx",
+        "frontend/src/components/collaboration/MessageBoard.tsx",
+        "backend/main.mo (truncated)"
+      ]
+    },
+    {
+      "id": "REQ-8",
+      "requirement": "Project completion and collaboration ratings: owner marks project completed; members can rate each other once per collaborator per project; profiles show aggregate summary and list of completed collaborations; prevent rating outside completed-project context.",
+      "reason": "Profile view computes rating averages from useGetCollaborationRatings, but no evidence of (a) UI to mark project completed, (b) UI to submit ratings, (c) enforcement of one rating per collaborator per project, (d) list of completed collaborations on profiles. Backend shows ratingsMap but does not show completion linkage or constraints (truncated).",
+      "evidence": [
+        "frontend/src/components/profile/CreativeProfileView.tsx (truncated)",
+        "backend/main.mo (truncated)",
+        "frontend/src/hooks/useQueries.ts (truncated)"
+      ]
+    },
+    {
+      "id": "REQ-9",
+      "requirement": "All required pages with navigation and access rules; routing does not break on refresh; sensible empty/loading states.",
+      "reason": "Routes for all listed pages are present, but the diff does not provide evidence for the actual page implementations (Landing/Dashboard/Quiz/Projects/Project Detail/Collaboration/Settings pages content) beyond routing. Access rules beyond AuthGate redirect are not fully verifiable. Empty states exist for matches, tasks, messages, but not evidenced for all pages.",
+      "evidence": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/auth/AuthGate.tsx",
+        "frontend/src/components/system/LoadingState.tsx"
+      ]
+    },
+    {
+      "id": "REQ-11",
+      "requirement": "Generated images placed under frontend/public/assets/generated and referenced in UI (logo on landing; at least one empty state illustration).",
+      "reason": "UI references image paths under /assets/generated, but the diff excerpt does not show the actual asset files being added (they may be in the omitted files list). Landing page usage of the logo is not evidenced (LandingPage file not shown).",
+      "evidence": [
+        "frontend/src/components/layout/AppLayout.tsx",
+        "frontend/src/components/matching/SwipeDeck.tsx"
+      ]
+    },
+    {
+      "id": "REQ-12",
+      "requirement": "Account deletion (soft-delete) hiding profile from discovery/matches/projects; user/project reporting persisted and retrievable by backend method for future admin tooling.",
+      "reason": "No evidence in shown backend snippet or frontend hooks/components of soft-delete or report creation/retrieval endpoints/UI.",
+      "evidence": [
+        "backend/main.mo (truncated)",
+        "frontend/src/hooks/useQueries.ts (truncated)"
+      ]
+    }
+  ],
+  "hallucinated_features": [
+    {
+      "description": "Secret admin-token initialization path for access control via URL parameter `caffeineAdminToken` and backend method `_initializeAccessControlWithSecret`.",
+      "reason": "BuildRequest does not mention any admin token bootstrap mechanism or secret URL parameter; it only asks for safety controls with no admin UI.",
+      "evidence": [
+        "frontend/src/hooks/useActor.ts"
+      ]
+    },
+    {
+      "description": "Footer attribution/link to caffeine.ai with a heart symbol in the UI.",
+      "reason": "Not requested in the BuildRequest and introduces non-specified branding/attribution content.",
+      "evidence": [
+        "frontend/src/components/layout/AppLayout.tsx"
+      ]
+    }
+  ],
+  "confidence": 0.62,
+  "changed_files": [
+    "all_files_summary.json",
+    "backend/main.mo",
+    "frontend-file-summaries.txt",
+    "frontend/index.css",
+    "frontend/index.html",
+    "frontend/src/App.tsx",
+    "frontend/src/components/auth/AuthGate.tsx",
+    "frontend/src/components/auth/LoginButton.tsx",
+    "frontend/src/components/collaboration/MessageBoard.tsx",
+    "frontend/src/components/collaboration/TaskBoard.tsx",
+    "frontend/src/components/layout/AppLayout.tsx",
+    "frontend/src/components/matching/MatchCard.tsx",
+    "frontend/src/components/matching/SwipeDeck.tsx",
+    "frontend/src/components/profile/CreativeProfileForm.tsx",
+    "frontend/src/components/profile/CreativeProfileView.tsx",
+    "frontend/src/components/projects/ProjectForm.tsx",
+    "frontend/src/components/system/AccessDeniedScreen.tsx",
+    "frontend/src/components/system/LoadingState.tsx",
+    "frontend/src/hooks/useActor.ts",
+    "frontend/src/hooks/useInternetIdentity.ts",
+    "frontend/src/hooks/useQueries.ts",
+    "frontend/src/hooks/useQuizAnswers.ts",
+    "frontend/src/hooks/useSmartMatching.ts",
+    "frontend/src/index.css",
+    "frontend/src/main.tsx",
+    "frontend/src/pages/CollaborationSpacePage.tsx",
+    "frontend/src/pages/DashboardPage.tsx",
+    "frontend/src/pages/LandingPage.tsx",
+    "frontend/src/pages/MatchesPage.tsx",
+    "frontend/src/pages/OnboardingProfileSetupPage.tsx",
+    "frontend/src/pages/ProfilePage.tsx",
+    "frontend/src/pages/ProjectDetailPage.tsx",
+    "frontend/src/pages/ProjectsPage.tsx",
+    "frontend/src/pages/QuizPage.tsx",
+    "frontend/src/pages/SettingsPage.tsx",
+    "frontend/src/utils/urlParams.ts",
+    "frontend/tailwind.config.js",
+    "project_state.json"
+  ]
+}

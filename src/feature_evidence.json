@@ -1,0 +1,259 @@
+{
+  "kind": "feature_evidence_report",
+  "features": [
+    {
+      "featureId": "feature-implement-internet-identity-sign-in-and-a-first-run-onboarding-flow-that-creates-a-user-account-record-and-routes-new-users-to-set-up-their-creative-profile",
+      "featureTitle": "Implement Internet Identity sign-in and a first-run onboarding flow that creates a user account record and routes new users to set up their Creative Profile.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/auth/AuthGate.tsx",
+        "frontend/src/components/auth/LoginButton.tsx",
+        "frontend/src/pages/LandingPage.tsx",
+        "frontend/src/pages/OnboardingProfileSetupPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-create-creative-profile-data-model-and-crud-display-name-bio-skill-tags-multi-select-skill-level-genres-styles-multi-select-goals-multi-select-availability-mood-vibe-tags-inspirations-free-form-list-portfolio-links-typed-url-list-and-a-looking-for-text-section",
+      "featureTitle": "Create Creative Profile data model and CRUD: display name, bio, skill tags (multi-select), skill level, genres/styles (multi-select), goals (multi-select), availability, mood/vibe tags, inspirations (free-form list), portfolio links (typed URL list), and a “Looking for” text section.",
+      "files": [
+        "frontend/src/components/profile/CreativeProfileForm.tsx",
+        "frontend/src/components/profile/CreativeProfileView.tsx",
+        "frontend/src/pages/ProfilePage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-2"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-build-a-creative-profile-quiz-that-collects-matching-inputs-experience-skill-level-genres-styles-goals-availability-mood-vibe-inspirations-and-stores-quiz-answers-for-use-in-matching",
+      "featureTitle": "Build a Creative Profile Quiz that collects matching inputs (experience/skill level, genres/styles, goals, availability, mood/vibe, inspirations) and stores quiz answers for use in matching.",
+      "files": [
+        "frontend/src/hooks/useQuizAnswers.ts",
+        "frontend/src/pages/MatchesPage.tsx",
+        "frontend/src/pages/QuizPage.tsx",
+        "frontend/src/pages/SettingsPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-3"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-smart-matching-suggestions-generate-a-ranked-list-of-collaborator-suggestions-using-quiz-profile-overlap-skills-genres-styles-goals-availability-vibe-inspirations-and-show-a-dating-style-swipe-like-pass-ui-that-records-likes-and-passes",
+      "featureTitle": "Implement “Smart Matching” suggestions: generate a ranked list of collaborator suggestions using quiz/profile overlap (skills, genres/styles, goals, availability, vibe/inspirations) and show a dating-style swipe/like-pass UI that records likes and passes.",
+      "files": [
+        "frontend/src/components/matching/MatchCard.tsx",
+        "frontend/src/components/matching/SwipeDeck.tsx",
+        "frontend/src/hooks/useSmartMatching.ts",
+        "frontend/src/pages/MatchesPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-4"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-project-based-discovery-users-can-create-project-postings-with-title-description-category-album-game-comic-novel-etc-genres-styles-vibe-tags-goals-timeline-availability-roles-needed-structured-list-and-optional-external-links-users-can-browse-filter-and-view-project-details",
+      "featureTitle": "Add Project-based discovery: users can create project postings with title, description, category (album/game/comic/novel/etc.), genres/styles, vibe tags, goals, timeline/availability, roles needed (structured list), and optional external links; users can browse, filter, and view project details.",
+      "files": [
+        "frontend/src/components/projects/ProjectForm.tsx",
+        "frontend/src/pages/ProjectDetailPage.tsx",
+        "frontend/src/pages/ProjectsPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-5"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-project-applications-and-invitations-users-can-apply-to-a-project-with-a-message-and-chosen-role-project-owners-can-review-applicants-accept-reject-and-optionally-invite-specific-users-to-apply-join",
+      "featureTitle": "Implement project applications and invitations: users can apply to a project with a message and chosen role; project owners can review applicants, accept/reject, and optionally invite specific users to apply/join.",
+      "files": [
+        "frontend/src/pages/ProjectDetailPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-6"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-provide-collaboration-spaces-for-accepted-collaborators-per-project-including-a-simple-task-board-to-do-doing-done-and-an-async-message-board-text-only-for-project-communication",
+      "featureTitle": "Provide collaboration spaces for accepted collaborators per project, including: a simple task board (To do / Doing / Done) and an async message board (text-only) for project communication.",
+      "files": [
+        "frontend/src/components/collaboration/MessageBoard.tsx",
+        "frontend/src/components/collaboration/TaskBoard.tsx",
+        "frontend/src/pages/CollaborationSpacePage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-7"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-optional-collaboration-history-and-ratings-minimal-mvp-after-a-project-is-marked-completed-by-the-owner-members-can-rate-each-other-on-communication-reliability-and-skill-accuracy-and-view-received-ratings-summary-on-profiles",
+      "featureTitle": "Add optional collaboration history and ratings (minimal MVP): after a project is marked completed by the owner, members can rate each other on communication, reliability, and skill accuracy, and view received ratings summary on profiles.",
+      "files": [
+        "frontend/src/pages/ProfilePage.tsx",
+        "frontend/src/pages/ProjectDetailPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-8"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-create-core-app-navigation-and-pages-landing-marketing-sign-in-dashboard-matches-active-projects-profile-view-edit-quiz-matches-browse-like-pass-projects-feed-create-project-detail-collaboration-space-tasks-messages-and-settings",
+      "featureTitle": "Create core app navigation and pages: Landing (marketing + sign-in), Dashboard (matches + active projects), Profile (view/edit), Quiz, Matches (browse/like/pass), Projects (feed + create), Project Detail, Collaboration Space (tasks + messages), and Settings.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/layout/AppLayout.tsx",
+        "frontend/src/components/system/AccessDeniedScreen.tsx",
+        "frontend/src/components/system/LoadingState.tsx",
+        "frontend/src/pages/DashboardPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-9"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-define-a-coherent-visual-theme-for-collabforge-and-apply-it-consistently-across-the-app-colors-typography-spacing-component-style-and-key-interaction-patterns-avoid-blue-purple-as-the-primary-palette",
+      "featureTitle": "Define a coherent visual theme for CollabForge and apply it consistently across the app (colors, typography, spacing, component style, and key interaction patterns). Avoid blue/purple as the primary palette.",
+      "files": [
+        "frontend/src/components/layout/AppLayout.tsx",
+        "frontend/src/index.css",
+        "frontend/tailwind.config.js"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-10"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-generate-and-include-essential-static-visual-assets-logo-small-ui-illustrations-and-render-them-in-the-ui-landing-page-and-empty-states-as-static-files-served-from-the-frontend",
+      "featureTitle": "Generate and include essential static visual assets (logo + small UI illustrations) and render them in the UI (landing page and empty states) as static files served from the frontend.",
+      "files": [
+        "frontend/src/components/system/LoadingState.tsx",
+        "frontend/src/pages/LandingPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-11"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-basic-account-and-safety-controls-ability-to-delete-own-account-soft-delete-and-ability-to-report-a-user-project-store-report-records-for-admin-review-later-no-admin-ui-required",
+      "featureTitle": "Add basic account and safety controls: ability to delete own account (soft-delete), and ability to report a user/project (store report records for admin review later; no admin UI required).",
+      "files": [
+        "frontend/src/pages/ProfilePage.tsx",
+        "frontend/src/pages/ProjectDetailPage.tsx",
+        "frontend/src/pages/SettingsPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-12"
+      ],
+      "confidence": "high"
+    }
+  ]
+}

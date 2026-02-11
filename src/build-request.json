@@ -1,0 +1,268 @@
+{
+  "kind": "build_request",
+  "title": "CollabForge MVP: Creative profiles, quiz-based matching, and project-based collaboration",
+  "priority": "normal",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "text": "Implement Internet Identity sign-in and a first-run onboarding flow that creates a user account record and routes new users to set up their Creative Profile.",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "A skill-matching collaboration app for artists, singers, coders, and writers"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Unauthenticated visitors see a clear call-to-action to sign in with Internet Identity.",
+        "After successful sign-in, the backend has a user record keyed by the caller principal.",
+        "New users are taken to an onboarding/profile setup screen; returning users are taken to their dashboard."
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "text": "Create Creative Profile data model and CRUD: display name, bio, skill tags (multi-select), skill level, genres/styles (multi-select), goals (multi-select), availability, mood/vibe tags, inspirations (free-form list), portfolio links (typed URL list), and a “Looking for” text section.",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "🧑‍🎨 Creative Profiles",
+          "Skill tags (Singer, Producer, Coder, Writer, Illustrator, etc.)",
+          "Portfolio links (SoundCloud, GitHub, ArtStation, Google Drive)",
+          "“Looking for” section"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Users can create/update their own profile and view other users’ profiles.",
+        "Profile fields support multiple selections where applicable (skills/genres/goals/vibes).",
+        "Portfolio links can be added/removed and are validated as URLs on the frontend.",
+        "Backend enforces that only the profile owner can edit their profile."
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "text": "Build a Creative Profile Quiz that collects matching inputs (experience/skill level, genres/styles, goals, availability, mood/vibe, inspirations) and stores quiz answers for use in matching.",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "Users answer a creative profile quiz",
+          "Experience level",
+          "Genres/styles",
+          "Project goals",
+          "Availability",
+          "Style & Vibe Matching"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Quiz can be completed and re-taken; latest answers are persisted.",
+        "Quiz answers are visible/editable from a settings/profile area.",
+        "If a user has not completed the quiz, they are prompted to do so before seeing match suggestions."
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "text": "Implement “Smart Matching” suggestions: generate a ranked list of collaborator suggestions using quiz/profile overlap (skills, genres/styles, goals, availability, vibe/inspirations) and show a dating-style swipe/like-pass UI that records likes and passes.",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "🎯 Smart Matching (Not Just Search)",
+          "The app suggests collaborators like a dating app—but for creativity."
+        ]
+      },
+      "acceptanceCriteria": [
+        "A user can browse suggested collaborators in a card-based UI and choose Like or Pass.",
+        "Likes/Passes are persisted and the same candidate is not repeatedly suggested once decided.",
+        "Suggestions are ranked and explainable at a basic level (e.g., show top shared tags such as genres/goals/vibes) in the UI.",
+        "Backend prevents a user from liking/passing themselves."
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "text": "Add Project-based discovery: users can create project postings with title, description, category (album/game/comic/novel/etc.), genres/styles, vibe tags, goals, timeline/availability, roles needed (structured list), and optional external links; users can browse, filter, and view project details.",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "🔍 Project-Based Discovery",
+          "Users post projects",
+          "“Looking for a vocalist”",
+          "“Need a writer for fantasy visual novel”",
+          "“Seeking coder for indie game”"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Signed-in users can create/edit/archive their own projects.",
+        "All users can browse a project feed and open a project detail page.",
+        "Project feed supports basic filtering by roles needed and genres/styles (at minimum).",
+        "Archived projects no longer appear in the default feed."
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "text": "Implement project applications and invitations: users can apply to a project with a message and chosen role; project owners can review applicants, accept/reject, and optionally invite specific users to apply/join.",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "Others apply or get invited"
+        ]
+      },
+      "acceptanceCriteria": [
+        "A user can submit an application to a project and see its status (pending/accepted/rejected).",
+        "Project owners can list applicants and accept or reject each application.",
+        "Project owners can send an invitation to a specific user; invited users can accept/decline.",
+        "Backend authorization ensures only the project owner can manage applications/invitations for that project."
+      ]
+    },
+    {
+      "id": "REQ-7",
+      "text": "Provide collaboration spaces for accepted collaborators per project, including: a simple task board (To do / Doing / Done) and an async message board (text-only) for project communication.",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "Simple task board (who’s doing what)",
+          "In-app chat"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Only project members (owner + accepted collaborators) can view and post in the project collaboration space.",
+        "Task board supports creating tasks, moving tasks across columns, assigning to members (optional), and marking complete via column state.",
+        "Message board supports posting messages and viewing message history in chronological order.",
+        "UI updates reliably using client-side polling/refresh (no WebSockets required)."
+      ]
+    },
+    {
+      "id": "REQ-8",
+      "text": "Add optional collaboration history and ratings (minimal MVP): after a project is marked completed by the owner, members can rate each other on communication, reliability, and skill accuracy, and view received ratings summary on profiles.",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "Collaboration history & ratings (optional)",
+          "Future: Collab Reputation System",
+          "rate: Communication, Reliability, Skill accuracy"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Project owner can mark a project as completed.",
+        "After completion, project members can submit one rating per collaborator per project with the three criteria.",
+        "Profiles show an aggregate summary (e.g., averages/counts) and a list of completed collaborations (minimal).",
+        "Users cannot rate non-collaborators or rate outside a completed project context."
+      ]
+    },
+    {
+      "id": "REQ-9",
+      "text": "Create core app navigation and pages: Landing (marketing + sign-in), Dashboard (matches + active projects), Profile (view/edit), Quiz, Matches (browse/like/pass), Projects (feed + create), Project Detail, Collaboration Space (tasks + messages), and Settings.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "Core Features",
+          "Project-Based Discovery",
+          "Smart Matching"
+        ]
+      },
+      "acceptanceCriteria": [
+        "All pages are reachable via a consistent navigation pattern for signed-in users.",
+        "Anonymous users can access Landing and view limited marketing content but cannot access app features without signing in.",
+        "Routing does not break on refresh and has sensible empty/loading states."
+      ]
+    },
+    {
+      "id": "REQ-10",
+      "text": "Define a coherent visual theme for CollabForge and apply it consistently across the app (colors, typography, spacing, component style, and key interaction patterns). Avoid blue/purple as the primary palette.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "App Idea: CollabForge"
+        ]
+      },
+      "acceptanceCriteria": [
+        "App uses a distinct, cohesive visual style across all pages (not default template styling).",
+        "Primary palette is not blue/purple.",
+        "Key components (cards, tags/chips, buttons, inputs) look consistent and intentional."
+      ]
+    },
+    {
+      "id": "REQ-11",
+      "text": "Generate and include essential static visual assets (logo + small UI illustrations) and render them in the UI (landing page and empty states) as static files served from the frontend.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "App Idea: CollabForge"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Generated images are placed under frontend/public/assets/generated and referenced directly by the frontend.",
+        "Landing page includes the logo asset.",
+        "At least one empty state (e.g., no matches / no projects) uses an illustration asset."
+      ]
+    },
+    {
+      "id": "REQ-12",
+      "text": "Add basic account and safety controls: ability to delete own account (soft-delete), and ability to report a user/project (store report records for admin review later; no admin UI required).",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "This app is about creative partnerships, not just gigs."
+        ]
+      },
+      "acceptanceCriteria": [
+        "User can initiate account deletion; their profile becomes hidden from discovery/matches/projects going forward.",
+        "Users can submit a report against a user or a project with a reason and optional text.",
+        "Reports are persisted in the backend and retrievable via a backend method intended for future admin tooling."
+      ]
+    }
+  ],
+  "constraints": [
+    "Backend must remain a single Motoko actor (single-actor architecture).",
+    "Do not edit files under frontend/src/components/ui or other frontend immutablePaths; compose these components instead.",
+    "Do not use WebSockets or real-time socket-based chat; implement async messaging with polling/refresh.",
+    "Do not integrate third-party authentication providers; only Internet Identity is supported.",
+    "Use English for all user-facing text."
+  ],
+  "nonGoals": [
+    "Voice notes and real-time voice features.",
+    "Rich file sharing (large binary uploads/streaming) beyond basic URLs/links in MVP.",
+    "Optional AI assistant features (lyric/story/code suggestions).",
+    "Paid monetization implementation (subscriptions, boosts, payment processing) in this MVP; only leave room in data model if needed."
+  ],
+  "imageRequirements": {
+    "required": [
+      "CollabForge wordmark logo with subtle anvil/forge motif, clean modern style, transparent background (collabforge-logo.dim_1024x256.png)",
+      "Minimal illustration of diverse creative tools (mic, pen, code brackets, paintbrush) in a cohesive flat style (creative-tools-illustration.dim_1200x800.png)",
+      "Minimal empty-state illustration of two puzzle pieces or hands collaborating, flat style (collaboration-empty-state.dim_800x600.png)"
+    ],
+    "edits": []
+  }
+}

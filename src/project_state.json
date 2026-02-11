@@ -1,0 +1,164 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 3,
+  "summary": "CollabForge is a skill-matching collaboration app for creatives (artists, singers, coders, writers) that uses a quiz-driven, dating-style smart matching system plus project-based discovery to help users find compatible collaborators by skills, style/genre, goals, availability, and vibe.",
+  "architectural_notes": [
+    "Core differentiation is quiz-driven matching (not just search) combined with project postings to attract serious collaborators.",
+    "Consider toxicity mitigation if implementing reputation/ratings (e.g., optional, abuse reporting, private feedback)."
+  ],
+  "known_issues": [],
+  "isFixRequest": false,
+  "imageRequirements": "## Required Images\n- CollabForge wordmark logo with subtle anvil/forge motif, clean modern style, transparent background (collabforge-logo.dim_1024x256.png)\n- Minimal illustration of diverse creative tools (mic, pen, code brackets, paintbrush) in a cohesive flat style (creative-tools-illustration.dim_1200x800.png)\n- Minimal empty-state illustration of two puzzle pieces or hands collaborating, flat style (collaboration-empty-state.dim_800x600.png)",
+  "existing_features": [
+    {
+      "id": "feature-implement-internet-identity-sign-in-and-a-first-run-onboarding-flow-that-creates-a-user-account-record-and-routes-new-users-to-set-up-their-creative-profile",
+      "title": "Implement Internet Identity sign-in and a first-run onboarding flow that creates a user account record and routes new users to set up their Creative Profile.",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-creative-profile-data-model-and-crud-display-name-bio-skill-tags-multi-select-skill-level-genres-styles-multi-select-goals-multi-select-availability-mood-vibe-tags-inspirations-free-form-list-portfolio-links-typed-url-list-and-a-looking-for-text-section",
+      "title": "Create Creative Profile data model and CRUD: display name, bio, skill tags (multi-select), skill level, genres/styles (multi-select), goals (multi-select), availability, mood/vibe tags, inspirations (free-form list), portfolio links (typed URL list), and a “Looking for” text section.",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-build-a-creative-profile-quiz-that-collects-matching-inputs-experience-skill-level-genres-styles-goals-availability-mood-vibe-inspirations-and-stores-quiz-answers-for-use-in-matching",
+      "title": "Build a Creative Profile Quiz that collects matching inputs (experience/skill level, genres/styles, goals, availability, mood/vibe, inspirations) and stores quiz answers for use in matching.",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-smart-matching-suggestions-generate-a-ranked-list-of-collaborator-suggestions-using-quiz-profile-overlap-skills-genres-styles-goals-availability-vibe-inspirations-and-show-a-dating-style-swipe-like-pass-ui-that-records-likes-and-passes",
+      "title": "Implement “Smart Matching” suggestions: generate a ranked list of collaborator suggestions using quiz/profile overlap (skills, genres/styles, goals, availability, vibe/inspirations) and show a dating-style swipe/like-pass UI that records likes and passes.",
+      "reqIds": [
+        "REQ-4"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-project-based-discovery-users-can-create-project-postings-with-title-description-category-album-game-comic-novel-etc-genres-styles-vibe-tags-goals-timeline-availability-roles-needed-structured-list-and-optional-external-links-users-can-browse-filter-and-view-project-details",
+      "title": "Add Project-based discovery: users can create project postings with title, description, category (album/game/comic/novel/etc.), genres/styles, vibe tags, goals, timeline/availability, roles needed (structured list), and optional external links; users can browse, filter, and view project details.",
+      "reqIds": [
+        "REQ-5"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-project-applications-and-invitations-users-can-apply-to-a-project-with-a-message-and-chosen-role-project-owners-can-review-applicants-accept-reject-and-optionally-invite-specific-users-to-apply-join",
+      "title": "Implement project applications and invitations: users can apply to a project with a message and chosen role; project owners can review applicants, accept/reject, and optionally invite specific users to apply/join.",
+      "reqIds": [
+        "REQ-6"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-provide-collaboration-spaces-for-accepted-collaborators-per-project-including-a-simple-task-board-to-do-doing-done-and-an-async-message-board-text-only-for-project-communication",
+      "title": "Provide collaboration spaces for accepted collaborators per project, including: a simple task board (To do / Doing / Done) and an async message board (text-only) for project communication.",
+      "reqIds": [
+        "REQ-7"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-optional-collaboration-history-and-ratings-minimal-mvp-after-a-project-is-marked-completed-by-the-owner-members-can-rate-each-other-on-communication-reliability-and-skill-accuracy-and-view-received-ratings-summary-on-profiles",
+      "title": "Add optional collaboration history and ratings (minimal MVP): after a project is marked completed by the owner, members can rate each other on communication, reliability, and skill accuracy, and view received ratings summary on profiles.",
+      "reqIds": [
+        "REQ-8"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-core-app-navigation-and-pages-landing-marketing-sign-in-dashboard-matches-active-projects-profile-view-edit-quiz-matches-browse-like-pass-projects-feed-create-project-detail-collaboration-space-tasks-messages-and-settings",
+      "title": "Create core app navigation and pages: Landing (marketing + sign-in), Dashboard (matches + active projects), Profile (view/edit), Quiz, Matches (browse/like/pass), Projects (feed + create), Project Detail, Collaboration Space (tasks + messages), and Settings.",
+      "reqIds": [
+        "REQ-9"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-define-a-coherent-visual-theme-for-collabforge-and-apply-it-consistently-across-the-app-colors-typography-spacing-component-style-and-key-interaction-patterns-avoid-blue-purple-as-the-primary-palette",
+      "title": "Define a coherent visual theme for CollabForge and apply it consistently across the app (colors, typography, spacing, component style, and key interaction patterns). Avoid blue/purple as the primary palette.",
+      "reqIds": [
+        "REQ-10"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-generate-and-include-essential-static-visual-assets-logo-small-ui-illustrations-and-render-them-in-the-ui-landing-page-and-empty-states-as-static-files-served-from-the-frontend",
+      "title": "Generate and include essential static visual assets (logo + small UI illustrations) and render them in the UI (landing page and empty states) as static files served from the frontend.",
+      "reqIds": [
+        "REQ-11"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-basic-account-and-safety-controls-ability-to-delete-own-account-soft-delete-and-ability-to-report-a-user-project-store-report-records-for-admin-review-later-no-admin-ui-required",
+      "title": "Add basic account and safety controls: ability to delete own account (soft-delete), and ability to report a user/project (store report records for admin review later; no admin UI required).",
+      "reqIds": [
+        "REQ-12"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Creative profiles with skill tags, portfolio links, looking-for section, and optional collaboration history/ratings",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-2",
+      "summary": "Quiz-driven smart matching that suggests collaborators based on skills, style/genre, goals, availability, and creative chemistry (dating-style matching UX)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-3",
+      "summary": "Project-based discovery: users can post projects, specify roles needed, and others can apply or be invited",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-4",
+      "summary": "Built-in collaboration tools: in-app chat, voice notes, file sharing, and a simple task board",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-5",
+      "summary": "Optional AI assistant for collaboration (lyric ideas, story prompts, code suggestions)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-6",
+      "summary": "Style/vibe matching with mood/vibe tags and inspirations (artists/games/anime/books)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-7",
+      "summary": "Monetization: free tier with limited matches/day + pro tier with unlimited matches, advanced filters, verified badge, priority placement; plus paid project boosts",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-8",
+      "summary": "Future: Collab reputation system with post-project ratings (communication, reliability, skill accuracy)",
+      "reqIds": [],
+      "status": "pending"
+    }
+  ],
+  "gameProjectType": "none",
+  "projectName": "CollabForge",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}

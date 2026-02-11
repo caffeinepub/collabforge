@@ -1,0 +1,395 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "CollabForge MVP frontend: II auth, creative profiles, matching UI, projects, and collaboration spaces",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "summary": "Add Internet Identity sign-in UX and first-run onboarding that routes new users to profile setup and returning users to dashboard.",
+      "acceptanceCriteria": [
+        "Unauthenticated visitors see a clear call-to-action to sign in with Internet Identity.",
+        "After successful sign-in, the backend has a user record keyed by the caller principal.",
+        "New users are taken to an onboarding/profile setup screen; returning users are taken to their dashboard."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "create",
+          "description": "Create the app root with routing and an auth-aware guard that restricts signed-in routes to authenticated users via the authorization component’s Internet Identity flow (useInternetIdentity) and actor readiness (useActor). Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/auth/AuthGate.tsx",
+          "operation": "create",
+          "description": "Add an AuthGate wrapper that redirects anonymous users to Landing and, after sign-in, checks getCallerUserProfile to decide between onboarding/profile setup vs dashboard (avoid flash by following the authorization component’s guidance around actor dependency). Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/auth/LoginButton.tsx",
+          "operation": "create",
+          "description": "Implement a reusable Login/Logout button using the authorization component’s recommended pattern (useInternetIdentity + react-query cache clear on logout). Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/pages/LandingPage.tsx",
+          "operation": "create",
+          "description": "Create a marketing landing page with a prominent Internet Identity sign-in CTA (LoginButton) and clear messaging that features require sign-in. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/pages/OnboardingProfileSetupPage.tsx",
+          "operation": "create",
+          "description": "Create first-run onboarding that captures initial Creative Profile essentials and calls saveCallerUserProfile/saveOrUpdateCreativeProfile, then routes to Dashboard. Verify the component's usage instructions before implementing."
+        }
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "summary": "Implement Creative Profile create/update and public viewing UI with validation for multi-select fields and portfolio links.",
+      "acceptanceCriteria": [
+        "Users can create/update their own profile and view other users’ profiles.",
+        "Profile fields support multiple selections where applicable (skills/genres/goals/vibes).",
+        "Portfolio links can be added/removed and are validated as URLs on the frontend.",
+        "Backend enforces that only the profile owner can edit their profile."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/ProfilePage.tsx",
+          "operation": "create",
+          "description": "Create Profile page supporting view/edit of the caller’s profile (getCallerUserProfile/saveOrUpdateCreativeProfile) and view-only display for other users by principal route param (getUserProfile/getCreativeProfile), with proper loading/empty/error states and graceful handling of authorization traps. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/profile/CreativeProfileForm.tsx",
+          "operation": "create",
+          "description": "Build a Creative Profile form composed from shadcn-ui components (inputs, textarea, select, badges/tags) supporting multi-select fields, free-form inspirations list, typed portfolio link list (label+URL), and client-side URL validation. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/profile/CreativeProfileView.tsx",
+          "operation": "create",
+          "description": "Create a consistent read-only profile rendering (cards, tag chips, link list) used on Profile and candidate cards, ensuring multi-select fields are presented clearly and consistently with the app theme. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/hooks/useCreativeProfile.ts",
+          "operation": "create",
+          "description": "Add react-query hooks wrapping actor calls for fetching/saving the caller profile and fetching other users’ profiles; include cache keys, optimistic UI where safe, and error normalization for authorization failures. Verify the component's usage instructions before implementing."
+        }
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "summary": "Create a Creative Profile Quiz UI that can be completed and re-taken, and is editable from settings/profile area, with gating prompt before match suggestions.",
+      "acceptanceCriteria": [
+        "Quiz can be completed and re-taken; latest answers are persisted.",
+        "Quiz answers are visible/editable from a settings/profile area.",
+        "If a user has not completed the quiz, they are prompted to do so before seeing match suggestions."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/QuizPage.tsx",
+          "operation": "create",
+          "description": "Create a multi-step Creative Profile Quiz (skill level, genres/styles, goals, availability, vibe, inspirations) with save/re-take flows and clear completion state; persist quiz state client-side initially (localStorage) while wiring to backend storage capability once available. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/hooks/useQuizAnswers.ts",
+          "operation": "create",
+          "description": "Implement a quiz answers hook providing get/set, completion detection, and local persistence; expose a migration point to backend persistence when the backend capability is available. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/pages/SettingsPage.tsx",
+          "operation": "create",
+          "description": "Add a Settings page section that links to edit quiz answers and shows quiz completion status, guiding users to complete quiz before matches. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/pages/MatchesPage.tsx",
+          "operation": "create",
+          "description": "Gate match browsing: if quiz is incomplete, show an inline prompt and link to Quiz page instead of suggestions. Verify the component's usage instructions before implementing."
+        }
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "summary": "Build swipe/like-pass matching UI that shows ranked collaborator cards with basic explainability and records decisions.",
+      "acceptanceCriteria": [
+        "A user can browse suggested collaborators in a card-based UI and choose Like or Pass.",
+        "Likes/Passes are persisted and the same candidate is not repeatedly suggested once decided.",
+        "Suggestions are ranked and explainable at a basic level (e.g., show top shared tags such as genres/goals/vibes) in the UI.",
+        "Backend prevents a user from liking/passing themselves."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/matching/MatchCard.tsx",
+          "operation": "create",
+          "description": "Create a card UI for collaborator suggestions (profile summary + shared tags explanation) with Like/Pass actions, composed from shadcn-ui card/button/badge components. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/matching/SwipeDeck.tsx",
+          "operation": "create",
+          "description": "Implement a dating-style deck interaction (button-driven like/pass; optional drag gestures if safe) that advances through candidates and prevents immediate re-showing within a session. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/hooks/useSmartMatching.ts",
+          "operation": "create",
+          "description": "Add a frontend matching hook that computes a ranked list and explainability based on quiz/profile overlap when candidate data is available; store Like/Pass decisions in local persistence initially and provide a clear integration point for backend persistence once available. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/pages/MatchesPage.tsx",
+          "operation": "modify",
+          "description": "Wire MatchCard/SwipeDeck into Matches page with loading/empty states, explainability UI, and persistence for decisions; ensure self-candidate is excluded on the client as a defense-in-depth measure. Verify the component's usage instructions before implementing."
+        }
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "summary": "Add project discovery UX: create/edit/archive project postings, browse feed with filters, and view project details.",
+      "acceptanceCriteria": [
+        "Signed-in users can create/edit/archive their own projects.",
+        "All users can browse a project feed and open a project detail page.",
+        "Project feed supports basic filtering by roles needed and genres/styles (at minimum).",
+        "Archived projects no longer appear in the default feed."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/ProjectsPage.tsx",
+          "operation": "create",
+          "description": "Create Projects feed page that lists projects (getAllProjects) with basic filters by genres and roles-needed, excludes archived/cancelled from default view, and includes a create-project entry for signed-in users. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/pages/ProjectDetailPage.tsx",
+          "operation": "create",
+          "description": "Create Project Detail page that displays full posting info, shows owner actions (edit/status changes where supported), and links into Collaboration Space when appropriate. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/projects/ProjectForm.tsx",
+          "operation": "create",
+          "description": "Create a Project Posting form (title, description, category, genres, vibes, goals, timeline/availability, roles needed list, external links) composed from shadcn-ui form inputs; validate URLs on the client. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/hooks/useProjects.ts",
+          "operation": "create",
+          "description": "Add react-query hooks for project feed/detail and create/update operations using actor functions (getAllProjects/getProject/createProject/updateProject/getFilteredProjectsByGenre), with cache invalidation and error handling. Verify the component's usage instructions before implementing."
+        }
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "summary": "Add UI flows for project applications and invitations with status tracking and owner review actions.",
+      "acceptanceCriteria": [
+        "A user can submit an application to a project and see its status (pending/accepted/rejected).",
+        "Project owners can list applicants and accept or reject each application.",
+        "Project owners can send an invitation to a specific user; invited users can accept/decline.",
+        "Backend authorization ensures only the project owner can manage applications/invitations for that project."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/projects/ProjectApplicationPanel.tsx",
+          "operation": "create",
+          "description": "Create an application UI on Project Detail (role selection + message + submit) and a status display area; implement client-side state and disable/guard actions until backend application/invitation capabilities are available. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/projects/ProjectOwnerApplicantsPanel.tsx",
+          "operation": "create",
+          "description": "Create an owner-only panel to review applicants and accept/reject, plus invite-by-user flow; UI should be wired but backend calls should be integrated once corresponding backend capability exists. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/pages/ProjectDetailPage.tsx",
+          "operation": "modify",
+          "description": "Wire application/invitation panels into the Project Detail page with owner detection (compare caller principal vs project.creator) and sensible empty/loading states. Verify the component's usage instructions before implementing."
+        }
+      ]
+    },
+    {
+      "id": "REQ-7",
+      "summary": "Implement per-project collaboration space UI with a task board and async message board using polling/refresh.",
+      "acceptanceCriteria": [
+        "Only project members (owner + accepted collaborators) can view and post in the project collaboration space.",
+        "Task board supports creating tasks, moving tasks across columns, assigning to members (optional), and marking complete via column state.",
+        "Message board supports posting messages and viewing message history in chronological order.",
+        "UI updates reliably using client-side polling/refresh (no WebSockets required)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/CollaborationSpacePage.tsx",
+          "operation": "create",
+          "description": "Create Collaboration Space page with tabs for Tasks and Messages; fetch tasks/messages from actor and refresh via polling (react-query refetchInterval) with manual refresh controls (no WebSockets). Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/collaboration/TaskBoard.tsx",
+          "operation": "create",
+          "description": "Implement a simple 3-column task board UI (To do/Doing/Done) with task creation and drag/drop or button-based moves; store column state client-side while using actor addTask/getTasks for the task list until backend supports richer task states. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/collaboration/MessageBoard.tsx",
+          "operation": "create",
+          "description": "Implement a text-only message board with message composer and chronological history; integrate with actor addMessage/getMessages and polling refresh. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/hooks/useCollaboration.ts",
+          "operation": "create",
+          "description": "Add react-query hooks for tasks and messages (getTasks/addTask, getMessages/addMessage) with polling, mutation invalidation, and basic error handling. Verify the component's usage instructions before implementing."
+        }
+      ]
+    },
+    {
+      "id": "REQ-8",
+      "summary": "Add minimal project completion + collaboration ratings UI and show ratings summaries on profiles.",
+      "acceptanceCriteria": [
+        "Project owner can mark a project as completed.",
+        "After completion, project members can submit one rating per collaborator per project with the three criteria.",
+        "Profiles show an aggregate summary (e.g., averages/counts) and a list of completed collaborations (minimal).",
+        "Users cannot rate non-collaborators or rate outside a completed project context."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/projects/ProjectCompletionAndRatings.tsx",
+          "operation": "create",
+          "description": "Create UI for owners to mark project completed (markProjectCompleted) and for members to rate collaborators (addCollaborationRating) once completed; enforce client-side guards for project status and membership cues, with backend as source of truth. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/hooks/useRatings.ts",
+          "operation": "create",
+          "description": "Add hooks to fetch/display ratings (getCollaborationRatings) and submit ratings (addCollaborationRating), plus aggregation helpers for averages/counts. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/pages/ProfilePage.tsx",
+          "operation": "modify",
+          "description": "Display received ratings summary and minimal collaboration history section using getCollaborationRatings results; ensure it is presented consistently with profile UI. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/pages/ProjectDetailPage.tsx",
+          "operation": "modify",
+          "description": "Wire ProjectCompletionAndRatings into Project Detail, visible only when relevant (owner actions vs member rating section). Verify the component's usage instructions before implementing."
+        }
+      ]
+    },
+    {
+      "id": "REQ-9",
+      "summary": "Create core pages and navigation with signed-in route protection and reliable routing on refresh.",
+      "acceptanceCriteria": [
+        "All pages are reachable via a consistent navigation pattern for signed-in users.",
+        "Anonymous users can access Landing and view limited marketing content but cannot access app features without signing in.",
+        "Routing does not break on refresh and has sensible empty/loading states."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/layout/AppLayout.tsx",
+          "operation": "create",
+          "description": "Create a signed-in app layout with top navigation (Dashboard, Profile, Quiz, Matches, Projects, Settings) and a consistent page container using shadcn-ui primitives. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/pages/DashboardPage.tsx",
+          "operation": "create",
+          "description": "Create Dashboard page that surfaces match prompt/state and active projects summary with clear empty/loading states and links to Matches/Projects/Collaboration Space as appropriate. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Register routes for Landing, Dashboard, Profile, Quiz, Matches, Projects (feed + create via modal/inline), Project Detail, Collaboration Space, and Settings; apply AuthGate for signed-in routes and ensure refresh-safe routing configuration. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/system/LoadingState.tsx",
+          "operation": "create",
+          "description": "Add reusable loading/empty/error state components to keep routing and data-fetch UX consistent across pages. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/system/AccessDeniedScreen.tsx",
+          "operation": "create",
+          "description": "Add an access denied screen for unauthorized actions (e.g., owner-only panels) and handle backend authorization failures gracefully per the authorization component guidance. Verify the component's usage instructions before implementing."
+        }
+      ]
+    },
+    {
+      "id": "REQ-10",
+      "summary": "Define and apply a cohesive CollabForge theme (non-blue/purple primary) with consistent components and spacing.",
+      "acceptanceCriteria": [
+        "App uses a distinct, cohesive visual style across all pages (not default template styling).",
+        "Primary palette is not blue/purple.",
+        "Key components (cards, tags/chips, buttons, inputs) look consistent and intentional."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/index.css",
+          "operation": "create",
+          "description": "Create global styles and Tailwind layers for a CollabForge theme using a forge-inspired palette (e.g., charcoal + ember/orange + sand) and consistent typography/spacing defaults; avoid blue/purple as primary. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/tailwind.config.js",
+          "operation": "create",
+          "description": "Define theme tokens (colors, radius, font families) to ensure consistent styling across shadcn-ui composed components, with non-blue/purple primary palette. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/layout/AppLayout.tsx",
+          "operation": "modify",
+          "description": "Apply the new theme consistently to navigation, page backgrounds, and common component wrappers (cards, chips, buttons) without editing immutable shadcn-ui files; only compose them. Verify the component's usage instructions before implementing."
+        }
+      ]
+    },
+    {
+      "id": "REQ-11",
+      "summary": "Include generated static assets (logo + illustrations) and render them on landing and empty states.",
+      "acceptanceCriteria": [
+        "Generated images are placed under frontend/public/assets/generated and referenced directly by the frontend.",
+        "Landing page includes the logo asset.",
+        "At least one empty state (e.g., no matches / no projects) uses an illustration asset."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/public/assets/generated/collabforge-logo.dim_1024x256.png",
+          "operation": "create",
+          "description": "Add the generated CollabForge wordmark logo asset as a static file."
+        },
+        {
+          "path": "frontend/public/assets/generated/creative-tools-illustration.dim_1200x800.png",
+          "operation": "create",
+          "description": "Add the generated creative tools illustration asset as a static file."
+        },
+        {
+          "path": "frontend/public/assets/generated/collaboration-empty-state.dim_800x600.png",
+          "operation": "create",
+          "description": "Add the generated collaboration empty-state illustration asset as a static file."
+        },
+        {
+          "path": "frontend/src/pages/LandingPage.tsx",
+          "operation": "modify",
+          "description": "Reference and render frontend/public/assets/generated/collabforge-logo.dim_1024x256.png and optionally frontend/public/assets/generated/creative-tools-illustration.dim_1200x800.png in the landing hero/marketing section."
+        },
+        {
+          "path": "frontend/src/components/system/LoadingState.tsx",
+          "operation": "modify",
+          "description": "Use frontend/public/assets/generated/collaboration-empty-state.dim_800x600.png in at least one empty state (e.g., no match suggestions / no projects) to meet the illustration requirement."
+        }
+      ]
+    },
+    {
+      "id": "REQ-12",
+      "summary": "Add settings UI for account deletion (soft-delete) and reporting users/projects with reason and optional text.",
+      "acceptanceCriteria": [
+        "User can initiate account deletion; their profile becomes hidden from discovery/matches/projects going forward.",
+        "Users can submit a report against a user or a project with a reason and optional text.",
+        "Reports are persisted in the backend and retrievable via a backend method intended for future admin tooling."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/safety/ReportDialog.tsx",
+          "operation": "create",
+          "description": "Create a reusable Report dialog (reason select + optional details) that can be launched from Profile and Project pages; wire UI now and integrate submission with backend report persistence capability once available. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/safety/DeleteAccountPanel.tsx",
+          "operation": "create",
+          "description": "Create a Settings panel that explains consequences and confirms soft-delete initiation; wire UI now and integrate with backend soft-delete capability once available; ensure logout + cache clear after deletion. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/pages/SettingsPage.tsx",
+          "operation": "modify",
+          "description": "Wire DeleteAccountPanel into Settings and ensure the screen is accessible from signed-in navigation. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/pages/ProfilePage.tsx",
+          "operation": "modify",
+          "description": "Add a 'Report user' action that opens ReportDialog and passes the viewed user context. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/pages/ProjectDetailPage.tsx",
+          "operation": "modify",
+          "description": "Add a 'Report project' action that opens ReportDialog and passes the viewed project context. Verify the component's usage instructions before implementing."
+        }
+      ]
+    }
+  ]
+}
